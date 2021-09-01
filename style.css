@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+
+  
+  
+}
+
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2,max-content);
+  grid-template-rows: repeat(4, max-content);
+
+  grid-gap: 2.5rem;
+  padding: 3rem;
+  
+  width: 500px;
+  height: 80vh;
+  
+  justify-content: center;
+  align-content: center;
+
+  margin: 10vh calc((100% - 500px)/2);
+  background-color: #a825b957;
+
+  border-radius: 8px;
+}
+
+.col-left {
+}
+
+.col-right {
+  /* justify-self: center; */
+}
+
+.col-right  input{
+  width: 250px;
+  
+}
+
+.fullname-left {
+  grid-column: 1 / span 1;
+  grid-row: 1 / 2;
+}
+
+.fullname-right {
+  grid-column: 2 / span 1;
+  grid-row: 1 / 2;
+}
+
+.button {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+
+}
+
+.button button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid black;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.button button:hover {
+  background-color: rgba(230, 230, 250, 0.753);
+}
