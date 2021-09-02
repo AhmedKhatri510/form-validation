@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
@@ -14,27 +16,23 @@ html {
 body {
   box-sizing: border-box;
   font-size: 1.6rem;
-
-  
-  
 }
-
 
 .form {
   display: grid;
-  grid-template-columns: repeat(2,max-content);
+  grid-template-columns: max-content 40rem;
   grid-template-rows: repeat(4, max-content);
 
   grid-gap: 2.5rem;
   padding: 3rem;
-  
-  width: 500px;
+
+  width: 600px;
   height: 80vh;
-  
+
   justify-content: center;
   align-content: center;
 
-  margin: 10vh calc((100% - 500px)/2);
+  margin: 10vh calc((100% - 600px) / 2);
   background-color: #a825b957;
 
   border-radius: 8px;
@@ -47,9 +45,8 @@ body {
   /* justify-self: center; */
 }
 
-.col-right  input{
+.col-right input {
   width: 250px;
-  
 }
 
 .fullname-left {
@@ -65,17 +62,41 @@ body {
 .button {
   grid-row: 4 / 5;
   grid-column: 2 / 3;
-
 }
 
 .button button {
   padding: 0.6rem 1.5rem;
   border-radius: 50px;
   border: 1px solid black;
-  transition: all .2s;
+  transition: all 0.2s;
   cursor: pointer;
 }
 
 .button button:hover {
   background-color: rgba(230, 230, 250, 0.753);
+}
+
+/*
+////////////////////////////////////
+/////////////////////////////////////
+*/
+.phone-detail {
+  width: 10rem;
+}
+
+.alert-fullname {
+  display: none;
+  font-size: 1rem;
+  color: red;
+}
+
+.mobile-provider,
+.state {
+  display: inline;
+  font-size: 1rem;
+}
+
+.mobile-provider-logo {
+  display: none;
+  height: 1.25rem;
 }
