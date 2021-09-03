@@ -389,7 +389,7 @@ btnOtpSubmit.addEventListener("click", function (e) {
       domOtpValidationForm.setAttribute("action", "https://pixel6.co/404.html");
     else {
       resetOtpForm();
-      domAttemptAlert.textContent = `you have only ${attempt} now`;
+      domAttemptAlert.textContent = `you have only ${attempt} attempt now`;
     }
   }
 });
