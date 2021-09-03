@@ -9,54 +9,71 @@
     <title>Document</title>
   </head>
   <body>
-    <form action="http://pixel6.co/" class="form">
-      <div class="col-left fullname-left">
-        <label for="fullname">Fullname</label>
-      </div>
-      <div class="col-right fullname-right">
+    <div class="container">
+      <form action="" class="otp-validation-form">
+        <span class="message"></span>
+        <span class="attempt-alert"></span>
         <input
-          type="text"
-          name="fullName"
-          id="fullname"
-          placeholder="Your Fullname"
+          type="password"
+          name="otp"
+          id="otp"
+          placeholder="Enter OTP"
+          maxlength="4"
           required
         />
-        <div class="fullname-alert">
-          <p class="alert-fullname">Please Enter correct Fullname</p>
+        <div class="button">
+          <button type="submit" id="btnotpsubmit">Validate</button>
         </div>
-      </div>
+      </form>
+      <form action="" class="form">
+        <div class="col-left fullname-left">
+          <label for="fullname">Fullname</label>
+        </div>
+        <div class="col-right fullname-right">
+          <input
+            type="text"
+            name="fullName"
+            id="fullname"
+            placeholder="Your Fullname"
+            required
+          />
+          <div class="fullname-alert">
+            <p class="alert-fullname">Please Enter correct Fullname</p>
+          </div>
+        </div>
 
-      <div class="col-left email-left">
-        <label for="email">Email</label>
-      </div>
-      <div class="col-right email-right">
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Your Email"
-          required
-        />
-      </div>
-      <div class="col-left phone-number-left">
-        <label for="phone-number">Phone number</label>
-      </div>
-      <div class="col-right phone-number-right">
-        <input
-          name="phone-number"
-          id="phone-number"
-          placeholder="Your Phone Number"
-          maxlength="18"
-          required
-        />
-        <span class="phone-detail">
-          <img src="" alt="mobile Provider" class="mobile-provider-logo" />
-          <span class="mobile-provider"></span>
-        </span>
-      </div>
-      <div class="col-right button">
-        <button type="submit" id="btnsubmit">submit</button>
-      </div>
-    </form>
+        <div class="col-left email-left">
+          <label for="email">Email</label>
+        </div>
+        <div class="col-right email-right">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Your Email"
+            required
+          />
+        </div>
+        <div class="col-left phone-number-left">
+          <label for="phone-number">Phone number</label>
+        </div>
+        <div class="col-right phone-number-right">
+          <input
+            name="phone-number"
+            id="phone-number"
+            placeholder="Your Phone Number"
+            maxlength="18"
+            required
+          />
+          <span class="phone-detail">
+            <img src="" alt="mobile Provider" class="mobile-provider-logo" />
+            <span class="mobile-provider"></span>
+          </span>
+        </div>
+        <div class="col-right button">
+          <button type="submit" id="btnformsubmit">submit</button>
+        </div>
+      </form>
+    </div>
   </body>
 </html>

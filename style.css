@@ -18,11 +18,12 @@ body {
   font-size: 1.6rem;
 }
 
-.form {
-  display: grid;
-  grid-template-columns: max-content 40rem;
-  grid-template-rows: repeat(4, max-content);
+.container {
+}
 
+.form,
+.otp-validation-form {
+  display: grid;
   grid-gap: 2.5rem;
   padding: 3rem;
 
@@ -36,6 +37,22 @@ body {
   background-color: #a825b957;
 
   border-radius: 8px;
+}
+
+.otp-validation-form {
+  display: none;
+  grid-template-columns: max-content;
+  grid-template-rows: repeat(2, max-content);
+}
+
+.otp-validation-form .message {
+  width: 250px;
+  font-size: 1.2rem;
+}
+
+.form {
+  grid-template-columns: max-content 40rem;
+  grid-template-rows: repeat(4, max-content);
 }
 
 .col-left {
@@ -59,7 +76,7 @@ body {
   grid-row: 1 / 2;
 }
 
-.button {
+.form .button {
   grid-row: 4 / 5;
   grid-column: 2 / 3;
 }
@@ -87,6 +104,11 @@ body {
 .alert-fullname {
   display: none;
   font-size: 1rem;
+  color: red;
+}
+
+.attempt-alert {
+  font-size: 1.2rem;
   color: red;
 }
 
