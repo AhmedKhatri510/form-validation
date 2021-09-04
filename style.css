@@ -19,6 +19,8 @@ body {
 }
 
 .container {
+  align-items: center;
+  vertical-align: middle;
 }
 
 .form,
@@ -53,6 +55,15 @@ body {
 .form {
   grid-template-columns: max-content 40rem;
   grid-template-rows: repeat(4, max-content);
+}
+
+.validation-successful {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+
+  text-align: center;
+  margin-top: 45vh;
 }
 
 .col-left {
@@ -101,7 +112,8 @@ body {
   width: 10rem;
 }
 
-.alert-fullname {
+.alert-fullname,
+.alert-email {
   display: none;
   font-size: 1rem;
   color: red;

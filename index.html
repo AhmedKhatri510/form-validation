@@ -10,6 +10,12 @@
   </head>
   <body>
     <div class="container">
+      <div class="validation-successful">
+        <h1>Validation Successful!</h1>
+        <p class="instruction">
+          Please wait, we will land you to your destination in 5 seconds
+        </p>
+      </div>
       <form action="" class="otp-validation-form">
         <span class="message"></span>
         <span class="attempt-alert"></span>
@@ -27,18 +33,18 @@
       </form>
       <form action="" class="form">
         <div class="col-left fullname-left">
-          <label for="fullname">Fullname</label>
+          <label for="fullname">Full name</label>
         </div>
         <div class="col-right fullname-right">
           <input
             type="text"
             name="fullName"
             id="fullname"
-            placeholder="Your Fullname"
+            placeholder="Your Full name"
             required
           />
-          <div class="fullname-alert">
-            <p class="alert-fullname">Please Enter correct Fullname</p>
+          <div>
+            <p class="alert-fullname">Please Enter correct Full name</p>
           </div>
         </div>
 
@@ -53,6 +59,9 @@
             placeholder="Your Email"
             required
           />
+          <div>
+            <p class="alert-email">Please Enter correct Email</p>
+          </div>
         </div>
         <div class="col-left phone-number-left">
           <label for="phone-number">Phone number</label>

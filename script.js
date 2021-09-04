@@ -3,6 +3,7 @@
 const btnFormSubmit = document.getElementById("btnformsubmit");
 const btnOtpSubmit = document.getElementById("btnotpsubmit");
 const domOtp = document.getElementById("otp");
+const btn = document.querySelector(".button");
 
 const alertFullname = document.querySelector(".alert-fullname");
 // const MIN_WORD_LENGTH_FULLNAME = 4;
@@ -103,60 +104,48 @@ const fullNameValidation = new FullNameValidation();
 /////////////////////////////////////////////
 //variable to check the phone number
 
+// stateObjCreation();
+
 class PhoneNumberValidation {
   validMobProvider = false;
-  validState = false;
-  validLast = false;
-  statesGlobal = [
-    { 111: "Andaman and Nicobar Islands" },
-    { 112: "Andhra Pradesh" },
-    { 113: "Arunachal Pradesh" },
-    { 114: "Assam" },
-    { 115: "Bihar" },
-    { 116: "Chandigarh" },
-    { 117: "Chhattisgarh" },
-    { 118: "Dadra and Nagar Haveli" },
-    { 119: "Daman and Diu" },
-    { 120: "Delhi" },
-    { 121: "Goa" },
-    { 122: "Gujarat" },
-    { 123: "Haryana" },
-    { 124: "Himachal Pradesh" },
-    { 125: "Jammu" },
-    { 126: "Jharkhand" },
-    { 127: "Karnataka" },
-    { 128: "Kashmir" },
-    { 129: "Kerala" },
-    { 130: "Ladakh" },
-    { 131: "Lakshadweep" },
-    { 132: "Madhya Pradesh" },
-    { 133: "Maharashtra" },
-    { 134: "Manipur" },
-    { 135: "Meghalaya" },
-    { 136: "Mizoram" },
-    { 137: "Nagaland" },
-    { 138: "Odisha" },
-    { 139: "Puducherry" },
-    { 140: "Punjab" },
-    { 141: "Rajasthan" },
-    { 142: "Sikkim" },
-    { 143: "Tamil Nadu" },
-    { 144: "Telangana" },
-    { 145: "Tripura" },
-    { 146: "Uttarakhand" },
-    { 147: "Uttar Pradesh" },
-    { 148: "West Bengal" },
-  ];
 
-  unionTerritory = [
-    { 149: "Andaman and Nicobar Islands" },
-    { 150: "Chandigarh" },
-    { 151: "Dadra Nagar Haveli and Daman Diu" },
-    { 152: "Delhi" },
-    { 153: "Jammu and Kashmir" },
-    { 154: "Ladakh" },
-    { 155: "Lakshadweep" },
-    { 156: "Puducherry" },
+  statesAndUnionTerritory = [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttarakhand",
+    "Uttar Pradesh",
+    "West Bengal",
+    "Andaman and Nicobar Islands",
+    "Chandigarh",
+    "Dadra Nagar Haveli and Daman Diu",
+    "Delhi",
+    "Jammu and Kashmir",
+    "Ladakh",
+    "Lakshadweep",
+    "Puducherry",
   ];
 
   constructor() {
@@ -165,6 +154,26 @@ class PhoneNumberValidation {
       this.enforceFormatForNumber.bind(this)
     );
     inputPhoneNumber.addEventListener("keyup", this.formatToPhone.bind(this));
+    this.stateObjCreation();
+  }
+
+  stateObjCreation() {
+    const noOfStateAndTerritory = this.statesAndUnionTerritory.length;
+    const permutationOf3Digits = 9 * 10 * 10;
+
+    const noOfDigitsToEachStateAndTerritory =
+      permutationOf3Digits / noOfStateAndTerritory;
+
+    let start = 100;
+    let end = start + noOfDigitsToEachStateAndTerritory - 1; //124
+    for (let i = 0; i < noOfStateAndTerritory; i++) {
+      const key = `${start}-${end}`;
+      const value = this.statesAndUnionTerritory[i];
+      this.statesAndUnionTerritory[i] = { key, value };
+
+      start = end + 1; // 125 150 175
+      end = start + noOfDigitsToEachStateAndTerritory - 1; //149 174 199
+    }
   }
 
   /////////////////////////////////////////
@@ -238,26 +247,14 @@ class PhoneNumberValidation {
 
   checkStateandUnionTerritory(states) {
     //when user press delete
-    this.validState = false;
-
-    for (const [i, state] of this.statesGlobal.entries()) {
-      if (Number(Object.keys(state)[0]) === Number(states)) {
-        domMobProvider.textContent += `, ${Object.values(state)[0]}`;
-        this.validState = true;
+    for (const [i, state] of this.statesAndUnionTerritory.entries()) {
+      let [low, high] = state.key.split("-");
+      low = +low;
+      high = +high;
+      if (Number(states) >= low && Number(states) <= high) {
+        domMobProvider.textContent += `, ${state.value}`;
         return;
       }
-    }
-
-    for (const [i, state] of this.unionTerritory.entries())
-      if (Number(Object.keys(state)[0]) === Number(states)) {
-        domMobProvider.textContent += `, ${Object.values(state)[0]}`;
-        this.validState = true;
-        break;
-      }
-
-    if (!this.validState) {
-      domMobProvider.style.color = "red";
-      domMobProvider.textContent += ", Not a valid state";
     }
   }
 
@@ -336,18 +333,44 @@ const displayMessage = function () {
    ${phoneNumber}, please enter in the following box and submit for confirmation`;
 };
 
+//////////////////////////////////////////////////
+//Email validation
+
+const validateEmail = function (email) {
+  console.log("email", email);
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+// const emailObj = new Email();
+const inputEmail = document.querySelector("#email");
+const domEmailAlert = document.querySelector(".alert-email");
+let validEmail = false;
+
+const checkForValidEmail = function () {
+  validEmail = validateEmail(inputEmail.value);
+  if (!validEmail) {
+    validEmail = false;
+    domEmailAlert.style.display = "block";
+  } else {
+    validEmail = true;
+    domEmailAlert.style.display = "none";
+  }
+};
 const detailSubmission = function (e) {
   //prevent reloading the page
   e.preventDefault();
+
   //check for valid fullname
   //email validation
+  checkForValidEmail();
   //realtime formatting of phone number and validation
 
   if (
     phoneNumberValidation.validMobProvider &&
-    phoneNumberValidation.validState &&
-    phoneNumberValidation.validLast &&
-    fullNameValidation.validFullName
+    fullNameValidation.validFullName &&
+    validEmail
   ) {
     domForm.style.display = "none";
     domOtpValidationForm.style.display = "grid";
@@ -373,17 +396,33 @@ const resetOtpForm = function () {
   displayMessage();
   displayOtp(otpGeneratedNumber);
 };
+
+const replaceOtpForm = function () {
+  domOtp.style.display = "none";
+  domMessage.style.display = "none";
+  btn.style.display = "none";
+  domOtpValidationForm.style.display = "none";
+};
 ////////////////////////////////
 //event handler
 
 btnFormSubmit.addEventListener("click", detailSubmission);
+
+const domValidationSuccessful = document.querySelector(
+  ".validation-successful"
+);
 
 let attempt = 4;
 btnOtpSubmit.addEventListener("click", function (e) {
   attempt--;
   console.log(otpGeneratedNumber, otp.value);
   if (otpGeneratedNumber === +domOtp.value) {
-    domOtpValidationForm.setAttribute("action", "https://pixel6.co/");
+    e.preventDefault();
+    domValidationSuccessful.style.display = "block";
+    replaceOtpForm();
+    setTimeout(() => {
+      location.assign("https://pixel6.co/");
+    }, 5000);
   } else {
     if (attempt === 0)
       domOtpValidationForm.setAttribute("action", "https://pixel6.co/404.html");
