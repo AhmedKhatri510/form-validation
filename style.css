@@ -42,13 +42,13 @@ body {
 }
 
 .otp-validation-form {
-  display: none;
+  display: grid;
   grid-template-columns: max-content;
   grid-template-rows: repeat(2, max-content);
 }
 
 .otp-validation-form .message {
-  width: 250px;
+  width: 300px;
   font-size: 1.2rem;
 }
 

@@ -1,8 +1,7 @@
 "use strict";
 
 const btnFormSubmit = document.getElementById("btnformsubmit");
-const btnOtpSubmit = document.getElementById("btnotpsubmit");
-const domOtp = document.getElementById("otp");
+
 const btn = document.querySelector(".button");
 
 const alertFullname = document.querySelector(".alert-fullname");
@@ -41,6 +40,7 @@ class FullNameValidation {
 
   checkFullname() {
     const fullName = document.querySelector("#fullname").value;
+
     console.log(fullName);
 
     //words in fullName
@@ -59,6 +59,7 @@ class FullNameValidation {
       alertFullname.style.display = "block";
       this.validFullName = false;
     } else {
+      localStorage.setItem("full name", fullName);
       alertFullname.style.display = "none";
       this.validFullName = true;
     }
@@ -291,6 +292,7 @@ class PhoneNumberValidation {
     if (last.split("").length === 4) {
       this.validLast = true;
       phoneNumber = +input;
+      localStorage.setItem("phone number", input);
     } else {
       this.validLast = false;
     }
@@ -300,38 +302,7 @@ class PhoneNumberValidation {
 ///////////////////////////////
 const phoneNumberValidation = new PhoneNumberValidation();
 
-const domOtpValidationForm = document.querySelector(".otp-validation-form");
 const domForm = document.querySelector(".form");
-
-/////////////////////////////////////////////////////
-//otp generation and validation
-let otpGeneratedNumber;
-const fourDigitNumber = function () {
-  return (
-    (Math.floor(Math.random() * 9) + 1) * 10 ** 3 +
-    Math.floor(Math.random() * 10) * 10 ** 2 +
-    Math.floor(Math.random() * 10) * 10 ** 1 +
-    Math.floor(Math.random() * 10) * 10 ** 0
-  );
-};
-
-const generateOtp = function () {
-  //generate otp
-  otpGeneratedNumber = +fourDigitNumber();
-};
-
-const domMessage = document.querySelector(".message");
-const domAttemptAlert = document.querySelector(".attempt-alert");
-
-const displayOtp = function (otpNo) {
-  domMessage.textContent += `, OTP:${otpNo}`;
-};
-
-const displayMessage = function () {
-  domMessage.textContent = `Dear ${firstName},
-   Thank you for your inquiry. A 4 digit verification number has been sent to your phone number:
-   ${phoneNumber}, please enter in the following box and submit for confirmation`;
-};
 
 //////////////////////////////////////////////////
 //Email validation
@@ -354,13 +325,15 @@ const checkForValidEmail = function () {
     validEmail = false;
     domEmailAlert.style.display = "block";
   } else {
+    localStorage.setItem("email", inputEmail.value);
     validEmail = true;
     domEmailAlert.style.display = "none";
   }
 };
+
 const detailSubmission = function (e) {
   //prevent reloading the page
-  e.preventDefault();
+  // e.preventDefault();
 
   //check for valid fullname
   //email validation
@@ -372,63 +345,25 @@ const detailSubmission = function (e) {
     fullNameValidation.validFullName &&
     validEmail
   ) {
-    domForm.style.display = "none";
-    domOtpValidationForm.style.display = "grid";
+    // domForm.style.display = "none";
+    // domOtpValidationForm.style.display = "grid";
 
-    //generateOtp
-    generateOtp();
+    // //generateOtp
+    // generateOtp();
 
-    //display message
-    displayMessage();
+    // //display message
+    // displayMessage();
 
-    displayOtp(otpGeneratedNumber);
-    console.log(otpGeneratedNumber);
+    // displayOtp(otpGeneratedNumber);
+    // console.log(otpGeneratedNumber);
+
+    domForm.setAttribute("action", "otpForm.html");
   } else {
     alert("Please enter detail correctly");
   }
 };
 
-const resetOtpForm = function () {
-  //reset form
-  domOtp.value = "";
-  domMessage.textContent = "";
-  generateOtp();
-  displayMessage();
-  displayOtp(otpGeneratedNumber);
-};
-
-const replaceOtpForm = function () {
-  domOtp.style.display = "none";
-  domMessage.style.display = "none";
-  btn.style.display = "none";
-  domOtpValidationForm.style.display = "none";
-};
 ////////////////////////////////
 //event handler
 
 btnFormSubmit.addEventListener("click", detailSubmission);
-
-const domValidationSuccessful = document.querySelector(
-  ".validation-successful"
-);
-
-let attempt = 4;
-btnOtpSubmit.addEventListener("click", function (e) {
-  attempt--;
-  console.log(otpGeneratedNumber, otp.value);
-  if (otpGeneratedNumber === +domOtp.value) {
-    e.preventDefault();
-    domValidationSuccessful.style.display = "block";
-    replaceOtpForm();
-    setTimeout(() => {
-      location.assign("https://pixel6.co/");
-    }, 5000);
-  } else {
-    if (attempt === 0)
-      domOtpValidationForm.setAttribute("action", "https://pixel6.co/404.html");
-    else {
-      resetOtpForm();
-      domAttemptAlert.textContent = `you have only ${attempt} attempt now`;
-    }
-  }
-});
