@@ -27,6 +27,7 @@ class FullNameValidation {
     );
     this.inputFullName.addEventListener("keyup", this.checkFullname.bind(this));
   }
+
   minLength(words) {
     console.log(words);
     //check if the words in fullName are of MIN_WORD_LENGTH_FULLNAME
@@ -246,6 +247,7 @@ class PhoneNumberValidation {
   }
 
   checkStateandUnionTerritory(states) {
+    if (!this.validMobProvider) return;
     //when user press delete
     for (const [i, state] of this.statesAndUnionTerritory.entries()) {
       let [low, high] = state.key.split("-");
@@ -265,7 +267,7 @@ class PhoneNumberValidation {
 
     this.checkMobProvider(mobProvider);
 
-    //check if the key is modfier key like delete and the mobProvider length < 3, then accordingly display provider
+    //check if the key is modifier key like delete and the mobProvider length < 3, then accordingly display provider
     if (this.isModifierKey(event) && mobProvider.length < 3) {
       this.checkMobProvider(mobProvider);
       return;
@@ -352,6 +354,7 @@ const detailSubmission = function (e) {
     );
     domForm.setAttribute("action", "otpForm.html");
   } else {
+    e.preventDefault();
     alert("Please enter detail correctly");
   }
 };
