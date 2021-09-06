@@ -59,7 +59,6 @@ class FullNameValidation {
       alertFullname.style.display = "block";
       this.validFullName = false;
     } else {
-      localStorage.setItem("full name", fullName);
       alertFullname.style.display = "none";
       this.validFullName = true;
     }
@@ -109,7 +108,7 @@ const fullNameValidation = new FullNameValidation();
 
 class PhoneNumberValidation {
   validMobProvider = false;
-
+  storePhoneNumber;
   statesAndUnionTerritory = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -292,7 +291,7 @@ class PhoneNumberValidation {
     if (last.split("").length === 4) {
       this.validLast = true;
       phoneNumber = +input;
-      localStorage.setItem("phone number", input);
+      this.storePhoneNumber = String(input);
     } else {
       this.validLast = false;
     }
@@ -306,7 +305,7 @@ const domForm = document.querySelector(".form");
 
 //////////////////////////////////////////////////
 //Email validation
-
+let storeEmail;
 const validateEmail = function (email) {
   console.log("email", email);
   const re =
@@ -325,7 +324,7 @@ const checkForValidEmail = function () {
     validEmail = false;
     domEmailAlert.style.display = "block";
   } else {
-    localStorage.setItem("email", inputEmail.value);
+    storeEmail = inputEmail.value;
     validEmail = true;
     domEmailAlert.style.display = "none";
   }
@@ -345,18 +344,12 @@ const detailSubmission = function (e) {
     fullNameValidation.validFullName &&
     validEmail
   ) {
-    // domForm.style.display = "none";
-    // domOtpValidationForm.style.display = "grid";
-
-    // //generateOtp
-    // generateOtp();
-
-    // //display message
-    // displayMessage();
-
-    // displayOtp(otpGeneratedNumber);
-    // console.log(otpGeneratedNumber);
-
+    localStorage.setItem("full name", fullNameValidation.inputFullName.value);
+    localStorage.setItem("email", storeEmail);
+    localStorage.setItem(
+      "phone number",
+      phoneNumberValidation.storePhoneNumber
+    );
     domForm.setAttribute("action", "otpForm.html");
   } else {
     alert("Please enter detail correctly");
