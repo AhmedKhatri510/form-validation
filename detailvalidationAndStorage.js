@@ -45,7 +45,8 @@ class FullNameValidation {
     console.log(fullName);
 
     //words in fullName
-    const words = fullName.split(" ");
+    const words = fullName.trim().split(" ");
+    console.log(words);
     firstName = words[0];
     console.log(words);
 
@@ -62,6 +63,7 @@ class FullNameValidation {
     } else {
       alertFullname.style.display = "none";
       this.validFullName = true;
+      enableSubmitBtn();
     }
   }
 
@@ -109,6 +111,7 @@ const fullNameValidation = new FullNameValidation();
 
 class PhoneNumberValidation {
   validMobProvider = false;
+  validPhoneNumber = false;
   storePhoneNumber;
   statesAndUnionTerritory = [
     "Andhra Pradesh",
@@ -160,15 +163,26 @@ class PhoneNumberValidation {
 
   stateObjCreation() {
     const noOfStateAndTerritory = this.statesAndUnionTerritory.length;
-    const permutationOf3Digits = 9 * 10 * 10;
+    const permutationOf3Digits = 10 * 10 * 10;
 
     const noOfDigitsToEachStateAndTerritory =
       permutationOf3Digits / noOfStateAndTerritory;
 
-    let start = 100;
+    let start = 0;
     let end = start + noOfDigitsToEachStateAndTerritory - 1; //124
     for (let i = 0; i < noOfStateAndTerritory; i++) {
-      const key = `${start}-${end}`;
+      let startStr = Math.floor(start),
+        endStr = Math.floor(end);
+
+      if ((startStr + "").length < 3) {
+        startStr = (startStr + "").padStart(3, "0");
+      }
+
+      if ((endStr + "").length < 3) {
+        endStr = (endStr + "").padStart(3, "0");
+      }
+
+      const key = `${startStr}-${endStr}`;
       const value = this.statesAndUnionTerritory[i];
       this.statesAndUnionTerritory[i] = { key, value };
 
@@ -294,26 +308,64 @@ class PhoneNumberValidation {
       this.validLast = true;
       phoneNumber = +input;
       this.storePhoneNumber = String(input);
+      enableSubmitBtn();
     } else {
+      this.validPhoneNumber = false;
       this.validLast = false;
+    }
+
+    if (this.validMobProvider && this.validLast) {
+      this.validPhoneNumber = true;
     }
   }
 }
 
-///////////////////////////////
+///////////////////////////////////////////////////////////
 const phoneNumberValidation = new PhoneNumberValidation();
 
 const domForm = document.querySelector(".form");
 
-//////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 //Email validation
 let storeEmail;
+
 const validateEmail = function (email) {
-  console.log("email", email);
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  // const tester =
+  //   /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+  const tester =
+    /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z](-*\.?[a-zA-Z])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+  if (!email) return false;
+
+  const emailParts = email.split("@");
+
+  if (emailParts.length !== 2) return false;
+
+  const account = emailParts[0];
+  const address = emailParts[1];
+
+  if (account.length > 64) return false;
+  else if (address.length > 255) return false;
+
+  const domainParts = address.split(".");
+  if (
+    domainParts.some(function (part) {
+      return part.length > 63;
+    })
+  )
+    return false;
+
+  if (!tester.test(email)) return false;
+
+  return true;
 };
+
+// const validateEmail = function (email) {
+//   console.log("email", email);
+//   const re =
+//     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//   return re.test(String(email).toLowerCase());
+// };
 
 // const emailObj = new Email();
 const inputEmail = document.querySelector("#email");
@@ -329,7 +381,32 @@ const checkForValidEmail = function () {
     storeEmail = inputEmail.value;
     validEmail = true;
     domEmailAlert.style.display = "none";
+    enableSubmitBtn();
   }
+};
+
+inputEmail.addEventListener("keyup", checkForValidEmail);
+//check for valid form detail
+
+const disableSubmitBtn = function () {
+  btnFormSubmit.disabled = true;
+};
+
+const enableSubmitBtn = function () {
+  btnFormSubmit.disabled = false;
+};
+
+const validFormDetail = function () {
+  console.log(
+    phoneNumberValidation.validPhoneNumber,
+    fullNameValidation.validFullName,
+    validEmail
+  );
+  return (
+    phoneNumberValidation.validPhoneNumber &&
+    fullNameValidation.validFullName &&
+    validEmail
+  );
 };
 
 const detailSubmission = function (e) {
@@ -338,14 +415,16 @@ const detailSubmission = function (e) {
 
   //check for valid fullname
   //email validation
+  fullNameValidation.checkFullname();
   checkForValidEmail();
   //realtime formatting of phone number and validation
 
-  if (
-    phoneNumberValidation.validMobProvider &&
-    fullNameValidation.validFullName &&
-    validEmail
-  ) {
+  if (!validFormDetail()) {
+    disableSubmitBtn();
+    return;
+  }
+
+  if (validFormDetail()) {
     localStorage.setItem("full name", fullNameValidation.inputFullName.value);
     localStorage.setItem("email", storeEmail);
     localStorage.setItem(
@@ -353,9 +432,6 @@ const detailSubmission = function (e) {
       phoneNumberValidation.storePhoneNumber
     );
     domForm.setAttribute("action", "otpForm.html");
-  } else {
-    e.preventDefault();
-    alert("Please enter detail correctly");
   }
 };
 
