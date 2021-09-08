@@ -16,27 +16,34 @@ html {
 body {
   box-sizing: border-box;
   font-size: 1.6rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(to right bottom, #7ed56f, #28b485);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  overflow-y: hidden;
 }
 
 .container {
-  align-items: center;
-  vertical-align: middle;
 }
 
 .form,
 .otp-validation-form {
   display: grid;
-  grid-gap: 2.5rem;
+  grid-gap: 1.5rem;
   padding: 3rem;
-
+  padding-left: 10rem;
   width: 600px;
-  height: 80vh;
+  height: 300px;
 
-  justify-content: center;
+  justify-content: start;
   align-content: center;
 
   margin: 10vh calc((100% - 600px) / 2);
-  background-color: #a825b957;
+  background-color: rgba(255, 255, 255, 0.397);
 
   border-radius: 8px;
 }
@@ -53,7 +60,7 @@ body {
 }
 
 .form {
-  grid-template-columns: max-content 40rem;
+  grid-template-columns: max-content;
   grid-template-rows: repeat(4, max-content);
 }
 
@@ -64,6 +71,7 @@ body {
 
   text-align: center;
   margin-top: 45vh;
+  color: white;
 }
 
 .col-left {
@@ -75,35 +83,61 @@ body {
 
 .col-right input {
   width: 250px;
+
+  min-width: 200px;
 }
 
-.fullname-left {
+.inputs {
+  font-size: 1.6rem;
+  border: none;
+  padding: 0.8rem 1.2rem;
+}
+
+.inputs:focus {
+  outline: none;
+}
+
+/* .fullname-left {
   grid-column: 1 / span 1;
   grid-row: 1 / 2;
-}
+} */
 
-.fullname-right {
+/* .fullname-right {
   grid-column: 2 / span 1;
   grid-row: 1 / 2;
-}
+} */
 
-.form .button {
+/* .form .button {
   grid-row: 4 / 5;
   grid-column: 2 / 3;
-}
+} */
 
 .button button {
-  padding: 0.6rem 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding: 0.8rem 2rem;
   border-radius: 50px;
-  border: 1px solid black;
+  border: none;
+  text-transform: uppercase;
   transition: all 0.2s;
   cursor: pointer;
+  margin-top: 2rem;
+
+  color: white;
+  background-color: #28b485;
+
+  transition: all 0.2s;
+
+  box-shadow: 0.5rem 1rem 1rem rgba(0, 0, 0, 0.158);
 }
 
 .button button:hover {
-  background-color: rgba(230, 230, 250, 0.753);
+  transform: translateY(-3px);
 }
 
+.button button:active {
+  transform: translateY(4px);
+}
 /*
 ////////////////////////////////////
 /////////////////////////////////////
@@ -114,14 +148,10 @@ body {
 
 .alert-fullname,
 .alert-email {
-  display: none;
+  display: block;
   font-size: 1rem;
-  color: red;
-}
-
-.attempt-alert {
-  font-size: 1.2rem;
-  color: red;
+  color: orangered;
+  visibility: hidden;
 }
 
 .mobile-provider,
@@ -133,4 +163,19 @@ body {
 .mobile-provider-logo {
   display: none;
   height: 1.25rem;
+}
+
+/*-----------------otp form--------------------*/
+
+.message {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(66, 66, 66);
+
+  letter-spacing: 1px;
+}
+
+.attempt-alert {
+  font-size: 1.5rem;
+  color: orangered;
 }

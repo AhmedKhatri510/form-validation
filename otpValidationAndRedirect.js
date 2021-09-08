@@ -114,7 +114,7 @@ const ootp = new Otp();
 ootp.otp.addEventListener("keydown", ootp.enforceFormatForNumber.bind(ootp));
 
 // No of attempts
-let attempt = 4;
+let attempt = 3;
 
 btnOtpSubmit.addEventListener("click", function (e) {
   e.preventDefault();
